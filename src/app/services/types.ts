@@ -1,6 +1,5 @@
-export interface FullReposRespone {
-    owner: Owner;
-    repos: Repo[];
+export interface AllUserReposInfo {
+    allRepos: Repo[];
 }
 
 export interface Repo {
@@ -8,10 +7,11 @@ export interface Repo {
     id: number;
     stars: number;
     forks: number;
+    owner: Owner;
 }
 
 export interface Owner {
-    name: string;
+    login: string;
     id: number;
     avatar_url: string;
 }
