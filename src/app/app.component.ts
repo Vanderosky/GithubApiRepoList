@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   fetchReposData(): void {
-    this.repoService.fetchReposByUserName('vanderosky').subscribe(repoData => {
+    this.repoService.fetchReposByUserName('octocat').subscribe(repoData => {
       this.repos = repoData;
     });
   }
