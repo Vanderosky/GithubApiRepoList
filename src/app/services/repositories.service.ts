@@ -9,18 +9,27 @@ import { Owner, Repo } from './types';
 })
 export class RepositoriesService {
 
-  private API_URL = 'https://api.github.com/';
+  private API_URL = 'https://api.github.com';
 
 
   constructor(private http: HttpClient) { }
 
-  performGet(URL: string, params: HttpParams): Observable<Response> {
-    return this.http.get(URL, { params }).pipe(
+  performGet(URL: string): Observable<Response> {
+    return this.http.get(URL).pipe(
       map((response: any) => {
         return response;
       }),
       catchError((error: Response) => {
         return throwError('An error occurred');
+      })
+    );
+  }
+
+  fetchReposByUserName(userName: string): Observable<Repo[]> {
+    return this.performGet(this.API_URL + '/users/' + userName + '/repos')
+    .pipe(
+      map((response: Response) => {
+        return this.mapAllReposInfo(response);
       })
     );
   }
@@ -39,7 +48,7 @@ export class RepositoriesService {
     const repo: Repo = {
       name: data.name,
       id: data.id,
-      stars: data.stars,
+      stars: data.stargazers_count,
       forks: data.forks,
       owner: this.mapOwner(data.owner)
     };

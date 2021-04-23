@@ -1,7 +1,3 @@
-export interface AllUserReposInfo {
-    allRepos: Repo[];
-}
-
 export interface Repo {
     name: string;
     id: number;
