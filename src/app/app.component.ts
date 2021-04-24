@@ -19,10 +19,9 @@ export class AppComponent implements OnInit {
   }
 
   fetchReposData(): void {
-    this.repoService.fetchReposByUserName('').subscribe( {
+    this.repoService.fetchReposByUserName('octocat').subscribe({
       next: repoData => {
         this.repos = repoData;
-        console.log(this.repos[0].name);
       },
       error: error => { },
       complete: () => { }
