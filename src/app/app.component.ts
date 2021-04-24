@@ -12,20 +12,20 @@ export class AppComponent implements OnInit {
 
   repos: Repo[] = [];
 
-  constructor(private repoService: RepositoriesService) {
-    repoService.fetchReposByUserName('vanderosky');
-  }
+  constructor(private repoService: RepositoriesService) { }
 
   ngOnInit(): void {
     this.fetchReposData();
   }
 
   fetchReposData(): void {
-    this.repoService.fetchReposByUserName('octocat').subscribe( {
+    this.repoService.fetchReposByUserName('').subscribe( {
       next: repoData => {
         this.repos = repoData;
       },
-      error: error => { },
+      error: error => {
+        console.log('hi')
+      },
       complete: () => { }
     });
   }

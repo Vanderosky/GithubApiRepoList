@@ -38,8 +38,22 @@ describe('RepositoriesService', () => {
         expect(repoData.length).toEqual(expectedRepo.length, 'expected number of Repos');
         expect(repoData[0].name).toEqual(expectedRepo[0].name, 'expected Repo name');
         expect(repoData[0].owner).toEqual(expectedRepo[0].owner, 'expected Repo owner');
-    });
+      });
 
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
+  });
+
+  it('should return an error with bad get argument', () => {
+    const errorResponse = new HttpErrorResponse({
+      error: '404 error',
+      status: 404, statusText: 'Not Found'
+    });
+
+    httpClientSpy.get.and.returnValue(of(errorResponse));
+
+    repoService.fetchReposByUserName('').subscribe(
+      repos => fail('expected an error, not repos'),
+      error => expect(error.message).toContain('')
+    );
   });
 });

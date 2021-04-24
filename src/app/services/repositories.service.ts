@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Owner, Repo } from './types';
@@ -19,8 +19,8 @@ export class RepositoriesService {
       map((response: any) => {
         return response;
       }),
-      catchError((error: Response) => {
-        return throwError('An error occurred');
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
       })
     );
   }
