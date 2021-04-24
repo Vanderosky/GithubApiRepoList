@@ -1,18 +1,45 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RepositoriesService } from './repositories.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
+import { Repo } from './types';
 
 describe('RepositoriesService', () => {
-  let service: RepositoriesService;
+  let repoService: RepositoriesService;
+  let httpClientSpy: { get: jasmine.Spy };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
     });
-    service = TestBed.inject(RepositoriesService);
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    repoService = new RepositoriesService(httpClientSpy as any);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(repoService).toBeTruthy();
+  });
+
+  it('should return expected Repo (HttpClient called once)', () => {
+    const expectedRepo: Repo[] = [
+      {
+        forks: 40,
+        id: 18221276,
+        name: 'git-consortium',
+        owner: { login: 'octocat', id: 583231, avatar_url: 'https://avatars.githubusercontent.com/u/583231?v=4' },
+        stars: 19
+      }];
+
+    httpClientSpy.get.and.returnValue(of(expectedRepo));
+
+    repoService.fetchReposByUserName('octocat').subscribe(
+      repoData => {
+        expect(repoData.length).toEqual(expectedRepo.length, 'expected number of Repos');
+        expect(repoData[0].name).toEqual(expectedRepo[0].name, 'expected Repo name');
+        expect(repoData[0].owner).toEqual(expectedRepo[0].owner, 'expected Repo owner');
+    });
+
+    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
   });
 });
