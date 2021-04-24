@@ -22,10 +22,9 @@ export class AppComponent implements OnInit {
     this.repoService.fetchReposByUserName('').subscribe( {
       next: repoData => {
         this.repos = repoData;
+        console.log(this.repos[0].name);
       },
-      error: error => {
-        console.log('hi')
-      },
+      error: error => { },
       complete: () => { }
     });
   }

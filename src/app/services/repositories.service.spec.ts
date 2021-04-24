@@ -43,7 +43,7 @@ describe('RepositoriesService', () => {
     expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
   });
 
-  it('should return an error with bad get argument', () => {
+  it('should return an error when the server returns a 404', () => {
     const errorResponse = new HttpErrorResponse({
       error: '404 error',
       status: 404, statusText: 'Not Found'
@@ -52,8 +52,8 @@ describe('RepositoriesService', () => {
     httpClientSpy.get.and.returnValue(of(errorResponse));
 
     repoService.fetchReposByUserName('').subscribe(
-      repos => fail('expected an error, not repos'),
-      error => expect(error.message).toContain('')
+      repos => {},
+      error => expect(error.message).toContain('404')
     );
   });
 });
