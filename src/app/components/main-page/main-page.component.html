@@ -7,27 +7,37 @@
             <mat-error *ngIf="userFormControl.hasError('required')">
                 User Name is <strong>required</strong>
             </mat-error>
+            <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </form>
 </div>
 
-<div class="center">
-    <mat-card class="card">
-        <mat-card-header>
-            <mat-card-title>Title</mat-card-title>
-            <mat-card-subtitle>Subtitle</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, praesentium sit tempora
-                numquam vel odit
-                dolorem qui quod sint distinctio! Quasi exercitationem tempore voluptas quam voluptatibus distinctio ex
-                magni
-                repellendus?
-            </p>
-
-            <mat-divider>
-            </mat-divider>
-        </mat-card-content>
-    </mat-card>
+<div *ngIf="isFetched">
+    <div class="center" *ngFor="let repo of repos">
+        <div class="center">
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>{{repo.name}}</mat-card-title>
+                    <mat-card-subtitle>
+                        {{repo.stargazers_count}}
+                        <mat-icon>star</mat-icon>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, praesentium sit
+                        tempora
+                        numquam vel odit
+                        dolorem qui quod sint distinctio! Quasi exercitationem tempore voluptas quam voluptatibus
+                        distinctio
+                        ex
+                        magni
+                        repellendus?
+                    </p>
+                    <mat-divider>
+                    </mat-divider>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
 </div>

@@ -20,6 +20,7 @@ export class MainPageComponent implements OnInit {
 
   repos: Repo[] = [];
   reposCount = 0;
+  isFetched = false;
 
   constructor(private repoService: RepositoriesService) { }
 
@@ -30,6 +31,7 @@ export class MainPageComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   ngOnInit(): void {
+    this.fetchReposData('octocat');
   }
 
   fetchReposData(user: string): void {
@@ -44,7 +46,9 @@ export class MainPageComponent implements OnInit {
             this.repos = this.sortReposByStars([].concat(...repoData));
           },
           error: error => { },
-          complete: () => { }
+          complete: () => {
+            this.isFetched = true;
+          }
         });
       }
     });
