@@ -1,1 +1,10 @@
-<p>main-page works!</p>
+<form>
+    <mat-form-field class="input-full-width">
+        <mat-label>User name</mat-label>
+        <input type="text" matInput [formControl]="userFormControl" [errorStateMatcher]="matcher"
+            placeholder="Ex. Microsoft">
+        <mat-error *ngIf="userFormControl.hasError('required')">
+            User Name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+</form>
