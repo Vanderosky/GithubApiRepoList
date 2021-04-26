@@ -10,36 +10,9 @@ import { Repo, User } from './services/types';
 export class AppComponent implements OnInit {
   title = 'GithubApiRepoList';
 
-  repos: Repo[] = [];
-  user: User = {
-    login: '',
-    public_repos: 0
-  };
-  constructor(private repoService: RepositoriesService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.fetchReposData();
-    this.fetchUser();
-  }
-
-  fetchReposData(): void {
-    this.repoService.fetchReposByUserName('microsoft', 1).subscribe({
-      next: repoData => {
-        this.repos = repoData;
-      },
-      error: error => { },
-      complete: () => { }
-    });
-  }
-
-  fetchUser(): void {
-    this.repoService.fetchUser('microsoft').subscribe({
-      next: userInfo => {
-        this.user = userInfo;
-      },
-      error: error => { },
-      complete: () => { }
-    });
   }
 
 }

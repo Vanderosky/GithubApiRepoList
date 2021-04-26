@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { RepositoriesService } from 'src/app/services/repositories.service';
+import { Repo, User } from 'src/app/services/types';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -16,19 +18,37 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  repos: Repo[] = [];
+  reposCount = 0;
+
+  constructor(private repoService: RepositoriesService) { }
 
   userFormControl = new FormControl('', [
     Validators.required,
   ]);
 
   matcher = new MyErrorStateMatcher();
-  state = 'collapsed';
 
   ngOnInit(): void {
   }
 
-  toggle(): void {
-    this.state = this.state === 'collapsed' ? 'expanded' : 'collapsed';
+  fetchReposData(user: string): void {
+    this.repoService.fetchUser(user).subscribe({
+      next: userInfo => {
+        this.reposCount = userInfo.public_repos;
+      },
+      error: error => { },
+      complete: () => {
+        this.repoService.fetchAllReposByUserName('octocat', 40, this.reposCount).subscribe({
+          next: repoData => {
+            this.repos = repoData;
+          },
+          error: error => { },
+          complete: () => { }
+        });
+      }
+    });
   }
+
+
 }

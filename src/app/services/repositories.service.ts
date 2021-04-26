@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Repo, User } from './types';
 
@@ -43,5 +43,18 @@ export class RepositoriesService {
         })
       );
   }
+
+  fetchAllReposByUserName(userName: string, perPage: number, reposCount: number): Observable<any[]> {
+    const AllRepos: Observable<Repo[]>[] = [];
+    const iterations = reposCount / perPage;
+    for (let i = 1; i < iterations; i++) {
+      AllRepos.push(this.fetchReposByUserName(userName, perPage, i));
+    }
+    return forkJoin(AllRepos).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    );
+}
 }
 
