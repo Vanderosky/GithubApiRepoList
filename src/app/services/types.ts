@@ -1,7 +1,7 @@
 export interface Repo {
     name: string;
     id: number;
-    stars: number;
+    stargazers_count: number;
     forks: number;
     owner: Owner;
 }

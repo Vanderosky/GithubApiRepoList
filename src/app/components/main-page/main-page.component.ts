@@ -39,9 +39,9 @@ export class MainPageComponent implements OnInit {
       },
       error: error => { },
       complete: () => {
-        this.repoService.fetchAllReposByUserName('octocat', 40, this.reposCount).subscribe({
+        this.repoService.fetchAllReposByUserName(user, 60, this.reposCount).subscribe({
           next: repoData => {
-            this.repos = repoData;
+            this.repos = this.sortReposByStars([].concat(...repoData));
           },
           error: error => { },
           complete: () => { }
@@ -50,5 +50,17 @@ export class MainPageComponent implements OnInit {
     });
   }
 
+  sortReposByStars(repos: Repo[]): Repo[] {
+    return repos.sort(this.compareStars);
+  }
 
+  compareStars( a: Repo, b: Repo): number {
+    if ( a.stargazers_count < b.stargazers_count ){
+      return -1;
+    }
+    if ( a.stargazers_count > b.stargazers_count ){
+      return 1;
+    }
+    return 0;
+  }
 }
