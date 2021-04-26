@@ -23,7 +23,12 @@ export class MainPageComponent implements OnInit {
   ]);
 
   matcher = new MyErrorStateMatcher();
+  state = 'collapsed';
 
   ngOnInit(): void {
+  }
+
+  toggle(): void {
+    this.state = this.state === 'collapsed' ? 'expanded' : 'collapsed';
   }
 }

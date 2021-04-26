@@ -2,4 +2,17 @@
     .input-full-width {
         width: 100%;
     }
+    .card {
+        width:100%;
+      }
+}
+@media (min-width: 600px) {
+    .card {
+        width:50%;
+      }
+      .center {
+        display: flex;
+        justify-content: center;
+      }
+
 }

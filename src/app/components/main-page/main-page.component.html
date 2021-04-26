@@ -1,10 +1,33 @@
-<form>
-    <mat-form-field class="input-full-width">
-        <mat-label>User name</mat-label>
-        <input type="text" matInput [formControl]="userFormControl" [errorStateMatcher]="matcher"
-            placeholder="Ex. Microsoft">
-        <mat-error *ngIf="userFormControl.hasError('required')">
-            User Name is <strong>required</strong>
-        </mat-error>
-    </mat-form-field>
-</form>
+<div class="center">
+    <form>
+        <mat-form-field class="input-full-width">
+            <mat-label>User name</mat-label>
+            <input type="text" matInput [formControl]="userFormControl" [errorStateMatcher]="matcher"
+                placeholder="Ex. Microsoft">
+            <mat-error *ngIf="userFormControl.hasError('required')">
+                User Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+
+<div class="center">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>Title</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, praesentium sit tempora
+                numquam vel odit
+                dolorem qui quod sint distinctio! Quasi exercitationem tempore voluptas quam voluptatibus distinctio ex
+                magni
+                repellendus?
+            </p>
+
+            <mat-divider>
+            </mat-divider>
+        </mat-card-content>
+    </mat-card>
+</div>
