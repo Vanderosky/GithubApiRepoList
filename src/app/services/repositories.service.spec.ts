@@ -28,7 +28,7 @@ describe('RepositoriesService', () => {
         id: 18221276,
         name: 'git-consortium',
         owner: { login: 'octocat', id: 583231, avatar_url: 'https://avatars.githubusercontent.com/u/583231?v=4' },
-        stars: 19
+        stargazers_count: 19
       }];
 
     httpClientSpy.get.and.returnValue(of(expectedRepo));
