@@ -14,8 +14,20 @@ export class RepositoriesService {
 
   constructor(private http: HttpClient) { }
 
-  fetchReposByUserName(userName: string): Observable<Repo[]> {
-    return this.http.get<Repo[]>(this.API_URL + '/users/' + userName + '/repos')
+  fetchReposByUserName(userName: string, perPage?: number, page?: number): Observable<Repo[]> {
+    let perPageUrl = '';
+
+    if (perPage) {
+      perPageUrl = '?per_page=' + perPage.toString();
+    }
+    if (page) {
+      perPageUrl = '?page=' + page.toString();
+    }
+    if (perPage && page) {
+      perPageUrl = '?per_page=' + perPage.toString() + '&page=' + page.toString();
+    }
+
+    return this.http.get<Repo[]>(this.API_URL + '/users/' + userName + '/repos' + perPageUrl)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return throwError(error);

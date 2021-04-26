@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   fetchReposData(): void {
-    this.repoService.fetchReposByUserName('microsoft').subscribe({
+    this.repoService.fetchReposByUserName('microsoft', 1).subscribe({
       next: repoData => {
         this.repos = repoData;
       },
