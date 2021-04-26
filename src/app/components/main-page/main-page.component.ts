@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { PageEvent } from '@angular/material/paginator';
 import { RepositoriesService } from 'src/app/services/repositories.service';
-import { Repo, User } from 'src/app/services/types';
+import { Repo } from 'src/app/services/types';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -18,6 +19,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class MainPageComponent implements OnInit {
 
+  fetchedRepos: Repo[] = [];
   repos: Repo[] = [];
   reposCount = 0;
   isFetched = false;
@@ -31,7 +33,7 @@ export class MainPageComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   ngOnInit(): void {
-    this.fetchReposData('octocat');
+    this.fetchReposData('allegro');
   }
 
   fetchReposData(user: string): void {
@@ -41,12 +43,13 @@ export class MainPageComponent implements OnInit {
       },
       error: error => { },
       complete: () => {
-        this.repoService.fetchAllReposByUserName(user, 60, this.reposCount).subscribe({
+        this.repoService.fetchAllReposByUserName(user, 100, this.reposCount).subscribe({
           next: repoData => {
-            this.repos = this.sortReposByStars([].concat(...repoData));
+            this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
           },
           error: error => { },
           complete: () => {
+            this.paginateRepos(0, 10);
             this.isFetched = true;
           }
         });
@@ -54,15 +57,25 @@ export class MainPageComponent implements OnInit {
     });
   }
 
+  paginateRepos(pageIndex: number, pageSize: number): void {
+    const start = pageIndex * pageSize;
+    const end = pageIndex * pageSize + pageSize;
+    this.repos = this.fetchedRepos.slice(start, end);
+  }
+
+  onChangePage(paginator: PageEvent): void {
+    this.paginateRepos(paginator.pageIndex, paginator.pageSize);
+  }
+
   sortReposByStars(repos: Repo[]): Repo[] {
     return repos.sort(this.compareStars);
   }
 
-  compareStars( a: Repo, b: Repo): number {
-    if ( a.stargazers_count < b.stargazers_count ){
+  compareStars(a: Repo, b: Repo): number {
+    if (a.stargazers_count < b.stargazers_count) {
       return -1;
     }
-    if ( a.stargazers_count > b.stargazers_count ){
+    if (a.stargazers_count > b.stargazers_count) {
       return 1;
     }
     return 0;

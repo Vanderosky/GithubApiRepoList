@@ -12,6 +12,11 @@
     </form>
 </div>
 
+<div *ngIf="isFetched" class="center">
+    <mat-paginator [length]="reposCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onChangePage($event)">
+    </mat-paginator>
+</div>
+
 <div *ngIf="isFetched">
     <div class="center" *ngFor="let repo of repos">
         <div class="center">
