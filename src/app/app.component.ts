@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RepositoriesService } from './services/repositories.service';
-import { Repo } from './services/types';
+import { Repo, User } from './services/types';
 
 @Component({
   selector: 'app-root',
@@ -10,22 +10,9 @@ import { Repo } from './services/types';
 export class AppComponent implements OnInit {
   title = 'GithubApiRepoList';
 
-  repos: Repo[] = [];
-
-  constructor(private repoService: RepositoriesService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.fetchReposData();
-  }
-
-  fetchReposData(): void {
-    this.repoService.fetchReposByUserName('octocat').subscribe({
-      next: repoData => {
-        this.repos = repoData;
-      },
-      error: error => { },
-      complete: () => { }
-    });
   }
 
 }
