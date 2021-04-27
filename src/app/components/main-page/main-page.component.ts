@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 import { RepositoriesService } from 'src/app/services/repositories.service';
 import { Repo } from 'src/app/services/types';
 
@@ -23,8 +24,9 @@ export class MainPageComponent implements OnInit {
   repos: Repo[] = [];
   reposCount = 0;
   isFetched = false;
+  userRouterName = '';
 
-  constructor(private repoService: RepositoriesService) { }
+  constructor(private repoService: RepositoriesService, private route: ActivatedRoute) { }
 
   userFormControl = new FormControl('', [
     Validators.required,
@@ -33,7 +35,7 @@ export class MainPageComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   ngOnInit(): void {
-    this.fetchReposData('allegro');
+    this.getRouteParameter();
   }
 
   fetchReposData(user: string): void {
@@ -79,5 +81,15 @@ export class MainPageComponent implements OnInit {
       return 1;
     }
     return 0;
+  }
+
+  getRouteParameter(): void {
+    this.route.paramMap.subscribe(params => {
+      if (params.get('user')) {
+        const userName = params.get('user') || '';
+        this.userFormControl.setValue(userName);
+        this.fetchReposData(userName);
+      }
+    });
   }
 }
