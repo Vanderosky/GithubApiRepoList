@@ -1,5 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -24,9 +23,8 @@ export class MainPageComponent implements OnInit {
   fetchedRepos: Repo[] = [];
   repos: Repo[] = [];
   reposCount = 0;
-  isFetched = false;
   userRouterName = '';
-  error = 0;
+  errorStatus = 0;
 
   constructor(private repoService: RepositoriesService, private route: ActivatedRoute, private router: Router) { }
 
@@ -46,7 +44,7 @@ export class MainPageComponent implements OnInit {
         this.reposCount = userInfo.public_repos;
       },
       error: error => {
-        this.error = error.status;
+        this.errorStatus = error.status;
       },
       complete: () => {
         this.repoService.fetchAllReposByUserName(user, 100, this.reposCount).subscribe({
@@ -54,11 +52,11 @@ export class MainPageComponent implements OnInit {
             this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
           },
           error: error => {
-            this.error = error.status;
+            this.errorStatus = error.status;
           },
           complete: () => {
             this.paginateRepos(0, 10);
-            this.error = 0;
+            this.errorStatus = 0;
           }
         });
       }

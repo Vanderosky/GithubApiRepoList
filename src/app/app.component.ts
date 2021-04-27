@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RepositoriesService } from './services/repositories.service';
-import { Repo, User } from './services/types';
 
 @Component({
   selector: 'app-root',

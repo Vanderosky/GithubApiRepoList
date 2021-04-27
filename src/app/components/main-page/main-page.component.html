@@ -14,12 +14,12 @@
     </button>
 </div>
 
-<div *ngIf="isFetched" class="center">
-    <mat-paginator [length]="reposCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onChangePage($event)">
-    </mat-paginator>
-</div>
-
-<div *ngIf="error == 0; else showError">
+<div *ngIf="errorStatus == 0; else showError">
+    <div class="center">
+        <mat-paginator [length]="reposCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onChangePage($event)">
+        </mat-paginator>
+    </div>
+    
     <div class="center" *ngFor="let repo of repos">
         <div class="center">
             <mat-card class="card">
@@ -48,11 +48,11 @@
 </div>
 
 <ng-template #showError>
-    <div *ngIf="error == 404" class="center">
-        <h2>Fetching data resulted in error: {{error}} (User has not been found!)</h2>
+    <div *ngIf="errorStatus == 404" class="center">
+        <h2>Fetching data resulted in error: {{errorStatus}} (User has not been found!)</h2>
     </div>
     
-    <div *ngIf="error!= 404" class="center">
-        <h2>Fetching data resulted in error: {{error}}</h2>
+    <div *ngIf="errorStatus!= 404" class="center">
+        <h2>Fetching data resulted in error: {{errorStatus}}</h2>
     </div>
 </ng-template>
