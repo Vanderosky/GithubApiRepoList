@@ -107,11 +107,11 @@ export class MainPageComponent implements OnInit {
   }
 
   getRouteParameter(): void {
+    this.paginator.firstPage();
     this.route.paramMap.subscribe((params) => {
       if (params.get('user')) {
         const userName = params.get('user') || '';
         this.userFormControl.setValue(userName);
-        this.paginator.firstPage();
         this.fetchReposData(userName);
       }
     });

@@ -19,7 +19,7 @@
         </mat-error>
       </mat-form-field>
     </form>
-    <button mat-button (click)="searchUserRepos()">
+    <button mat-button [disabled]="!userFormControl.valid" (click)="searchUserRepos()">
       <mat-icon matSuffix>search</mat-icon>
     </button>
   </div>
