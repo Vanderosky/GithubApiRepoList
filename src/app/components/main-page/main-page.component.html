@@ -1,33 +1,95 @@
-<div class="center">
-    <form>
+<div class="set-margin">
+  <div class="center-content">
+    <span>
+      <form>
         <mat-form-field class="input-full-width">
-            <mat-label>User name</mat-label>
-            <input type="text" matInput [formControl]="userFormControl" [errorStateMatcher]="matcher"
-                placeholder="Ex. Microsoft">
-            <mat-error *ngIf="userFormControl.hasError('required')">
-                User Name is <strong>required</strong>
-            </mat-error>
+          <mat-label class="input-align-center">User name</mat-label>
+          <input
+            class="input-align-center"
+            type="text"
+            matInput
+            [formControl]="userFormControl"
+            [errorStateMatcher]="matcher"
+            placeholder="Ex. Microsoft"
+          />
+          <mat-error
+            class="input-align-center"
+            *ngIf="userFormControl.hasError('required')"
+          >
+            User Name is <strong>required</strong>
+          </mat-error>
         </mat-form-field>
-    </form>
-</div>
+      </form>
+    </span>
+    <span>
+      <button
+        mat-button
+        [disabled]="!userFormControl.valid"
+        (click)="searchUserRepos()"
+      >
+        <mat-icon matSuffix>search</mat-icon>
+      </button>
+    </span>
+  </div>
 
-<div class="center">
-    <mat-card class="card">
-        <mat-card-header>
-            <mat-card-title>Title</mat-card-title>
-            <mat-card-subtitle>Subtitle</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, praesentium sit tempora
-                numquam vel odit
-                dolorem qui quod sint distinctio! Quasi exercitationem tempore voluptas quam voluptatibus distinctio ex
-                magni
-                repellendus?
-            </p>
+  <div *ngIf="errorStatus == 0; else showError">
+    <div>
+      <mat-paginator
+        [length]="user.public_repos"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="onChangePage($event)"
+      >
+      </mat-paginator>
+    </div>
 
-            <mat-divider>
-            </mat-divider>
-        </mat-card-content>
-    </mat-card>
+    <div *ngFor="let repo of repos" class="center-content">
+      <div>
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title (click)="goToGithubProfile(repo.name)"><a>{{ repo.name }}</a></mat-card-title>
+            <mat-card-subtitle>
+              Updated at {{ repo.updated_at | date }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-title-group>
+            <span class="fill-remaining-space">
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="primary" selected>
+                  Stars: {{ repo.stargazers_count }}
+                </mat-chip>
+              </mat-chip-list>
+            </span>
+            <span class="fill-remaining-space">
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="accent" selected>
+                  Forks: {{ repo.forks }}
+                </mat-chip>
+              </mat-chip-list>
+            </span>
+            <span>
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="warn" selected>
+                  Issues: {{ repo.open_issues_count }}
+                </mat-chip>
+              </mat-chip-list>
+            </span>
+          </mat-card-title-group>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #showError>
+    <div *ngIf="errorStatus == 404" class="center">
+      <h2>
+        Fetching data resulted in error: {{ errorStatus }} (User has not been
+        found!)
+      </h2>
+    </div>
+
+    <div *ngIf="errorStatus != 404" class="center">
+      <h2>Fetching data resulted in error: {{ errorStatus }}</h2>
+    </div>
+  </ng-template>
 </div>

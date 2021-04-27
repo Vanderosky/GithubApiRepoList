@@ -4,6 +4,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -12,7 +15,10 @@ describe('AppComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         MatToolbarModule,
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatFormFieldModule
       ],
       declarations: [
         AppComponent

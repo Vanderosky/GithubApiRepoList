@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterModule } from '@angular/router';
 import { MainPageComponent } from './main-page.component';
 
 describe('MainPageComponent', () => {
@@ -9,10 +9,9 @@ describe('MainPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainPageComponent ],
-      imports: [HttpClientTestingModule]
-    })
-    .compileComponents();
+      declarations: [MainPageComponent],
+      imports: [HttpClientTestingModule, RouterModule.forRoot([])],
+    }).compileComponents();
   });
 
   beforeEach(() => {

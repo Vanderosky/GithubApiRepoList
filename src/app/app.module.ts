@@ -14,12 +14,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainPageComponent
-  ],
+  declarations: [AppComponent, MainPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,9 +31,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatDividerModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    MatChipsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

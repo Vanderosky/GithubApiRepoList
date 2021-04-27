@@ -1,3 +1,7 @@
+# Komentarz do programu
+
+Api githuba nie pozwala na sortowanie po gwiazdkach w zapytaniu GET. W związku z tym aplikacja pobiera cała listę repozytoriów od razu, i sortuje lokalnie. Paginacja działa więc również tylko lokalnie.
+
 # GithubApiRepoList
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.4.
