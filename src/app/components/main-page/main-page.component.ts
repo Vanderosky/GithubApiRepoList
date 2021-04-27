@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -25,6 +26,7 @@ export class MainPageComponent implements OnInit {
   reposCount = 0;
   isFetched = false;
   userRouterName = '';
+  error = 0;
 
   constructor(private repoService: RepositoriesService, private route: ActivatedRoute, private router: Router) { }
 
@@ -43,18 +45,20 @@ export class MainPageComponent implements OnInit {
       next: userInfo => {
         this.reposCount = userInfo.public_repos;
       },
-      error: error => { },
+      error: error => {
+        this.error = error.status;
+      },
       complete: () => {
         this.repoService.fetchAllReposByUserName(user, 100, this.reposCount).subscribe({
           next: repoData => {
             this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
           },
           error: error => {
-            console.log('error');
+            this.error = error.status;
           },
           complete: () => {
             this.paginateRepos(0, 10);
-            this.isFetched = true;
+            this.error = 0;
           }
         });
       }

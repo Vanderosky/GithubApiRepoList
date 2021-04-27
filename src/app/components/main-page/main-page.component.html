@@ -19,7 +19,7 @@
     </mat-paginator>
 </div>
 
-<div *ngIf="isFetched">
+<div *ngIf="error == 0; else showError">
     <div class="center" *ngFor="let repo of repos">
         <div class="center">
             <mat-card class="card">
@@ -46,3 +46,13 @@
         </div>
     </div>
 </div>
+
+<ng-template #showError>
+    <div *ngIf="error == 404" class="center">
+        <h2>Fetching data resulted in error: {{error}} (User has not been found!)</h2>
+    </div>
+    
+    <div *ngIf="error!= 404" class="center">
+        <h2>Fetching data resulted in error: {{error}}</h2>
+    </div>
+</ng-template>
