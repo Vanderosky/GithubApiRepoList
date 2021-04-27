@@ -6,7 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorIntl,
+  PageEvent,
+} from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientService } from 'src/app/services/http-client.service';
 import { RepositoriesService } from 'src/app/services/repositories.service';
@@ -32,7 +36,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
+  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(
+    new MatPaginatorIntl(),
+    ChangeDetectorRef.prototype
+  );
 
   fetchedRepos: Repo[] = [];
   repos: Repo[] = [];
