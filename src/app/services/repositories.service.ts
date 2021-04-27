@@ -44,7 +44,11 @@ export class RepositoriesService {
       );
   }
 
-  fetchAllReposByUserName(userName: string, perPage: number, reposCount: number): Observable<any[]> {
+  fetchAllReposByUserName(
+    userName: string,
+    perPage: number,
+    reposCount: number
+  ): Observable<any[]> {
     const AllRepos: Observable<Repo[]>[] = [];
     const iterations = reposCount / perPage;
     for (let i = 1; i < iterations + 1; i++) {
@@ -55,6 +59,6 @@ export class RepositoriesService {
         return throwError(error);
       })
     );
-}
+  }
 }
 
