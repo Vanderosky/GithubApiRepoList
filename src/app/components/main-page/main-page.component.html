@@ -1,61 +1,73 @@
 <div class="set-margin">
+  <div class="center">
+    <form>
+      <mat-form-field class="input-full-width">
+        <mat-label class="input-align-center">User name</mat-label>
+        <input
+          class="input-align-center"
+          type="text"
+          matInput
+          [formControl]="userFormControl"
+          [errorStateMatcher]="matcher"
+          placeholder="Ex. Microsoft"
+        />
+        <mat-error
+          class="input-align-center"
+          *ngIf="userFormControl.hasError('required')"
+        >
+          User Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <button mat-button (click)="searchUserRepos()">
+      <mat-icon matSuffix>search</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="errorStatus == 0; else showError">
     <div class="center">
-        <form>
-            <mat-form-field class="input-full-width">
-                <mat-label class="input-align-center">User name</mat-label>
-                <input class="input-align-center" type="text" matInput [formControl]="userFormControl" [errorStateMatcher]="matcher"
-                    placeholder="Ex. Microsoft">
-                <mat-error class="input-align-center" *ngIf="userFormControl.hasError('required')">
-                    User Name is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-        </form>
-        <button mat-button (click)="searchUserRepos()">
-            <mat-icon matSuffix>search</mat-icon>
-        </button>
+      <mat-paginator
+        [length]="reposCount"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="onChangePage($event)"
+      >
+      </mat-paginator>
     </div>
 
-    <div *ngIf="errorStatus == 0; else showError">
-        <div class="center">
-            <mat-paginator [length]="reposCount" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-                (page)="onChangePage($event)">
-            </mat-paginator>
-        </div>
+    <div class="center" *ngFor="let repo of repos">
+      <div class="center">
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title>{{ repo.name }}</mat-card-title>
+            <mat-card-subtitle>
+              {{ repo.stargazers_count }}
+              <mat-icon>star</mat-icon>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Exercitationem, praesentium sit tempora numquam vel odit dolorem
+              qui quod sint distinctio! Quasi exercitationem tempore voluptas
+              quam voluptatibus distinctio ex magni repellendus?
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 
-        <div class="center" *ngFor="let repo of repos">
-            <div class="center">
-                <mat-card class="card">
-                    <mat-card-header>
-                        <mat-card-title>{{repo.name}}</mat-card-title>
-                        <mat-card-subtitle>
-                            {{repo.stargazers_count}}
-                            <mat-icon>star</mat-icon>
-                        </mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, praesentium sit
-                            tempora
-                            numquam vel odit
-                            dolorem qui quod sint distinctio! Quasi exercitationem tempore voluptas quam voluptatibus
-                            distinctio
-                            ex
-                            magni
-                            repellendus?
-                        </p>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
+  <ng-template #showError>
+    <div *ngIf="errorStatus == 404" class="center">
+      <h2>
+        Fetching data resulted in error: {{ errorStatus }} (User has not been
+        found!)
+      </h2>
     </div>
 
-    <ng-template #showError>
-        <div *ngIf="errorStatus == 404" class="center">
-            <h2>Fetching data resulted in error: {{errorStatus}} (User has not been found!)</h2>
-        </div>
-
-        <div *ngIf="errorStatus!= 404" class="center">
-            <h2>Fetching data resulted in error: {{errorStatus}}</h2>
-        </div>
-    </ng-template>
+    <div *ngIf="errorStatus != 404" class="center">
+      <h2>Fetching data resulted in error: {{ errorStatus }}</h2>
+    </div>
+  </ng-template>
 </div>

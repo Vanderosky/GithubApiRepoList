@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,12 +13,14 @@ import { Repo } from 'src/app/services/types';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
-    control: FormControl | null, form: FormGroupDirective | NgForm | null
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
   ): boolean {
     const isSubmitted = form && form.submitted;
     return !!(
-      control && control.invalid && (control.dirty || control.touched || isSubmitted
-      )
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
     );
   }
 }
@@ -21,10 +28,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
-
   fetchedRepos: Repo[] = [];
   repos: Repo[] = [];
   reposCount = 0;
@@ -35,11 +41,9 @@ export class MainPageComponent implements OnInit {
     private repoService: RepositoriesService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
-  userFormControl = new FormControl('', [
-    Validators.required,
-  ]);
+  userFormControl = new FormControl('', [Validators.required]);
 
   matcher = new MyErrorStateMatcher();
 
@@ -49,27 +53,28 @@ export class MainPageComponent implements OnInit {
 
   fetchReposData(user: string): void {
     this.repoService.fetchUser(user).subscribe({
-      next: userInfo => {
+      next: (userInfo) => {
         this.reposCount = userInfo.public_repos;
       },
-      error: error => {
+      error: (error) => {
         this.errorStatus = error.status;
       },
       complete: () => {
-        this.repoService.fetchAllReposByUserName(user, 100, this.reposCount)
+        this.repoService
+          .fetchAllReposByUserName(user, 100, this.reposCount)
           .subscribe({
-            next: repoData => {
+            next: (repoData) => {
               this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
             },
-            error: error => {
+            error: (error) => {
               this.errorStatus = error.status;
             },
             complete: () => {
               this.paginateRepos(0, 10);
               this.errorStatus = 0;
-            }
+            },
           });
-      }
+      },
     });
   }
 
@@ -98,7 +103,7 @@ export class MainPageComponent implements OnInit {
   }
 
   getRouteParameter(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       if (params.get('user')) {
         const userName = params.get('user') || '';
         this.userFormControl.setValue(userName);
