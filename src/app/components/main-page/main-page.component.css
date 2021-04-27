@@ -19,11 +19,13 @@
     display: flex;
     justify-content: center;
   }
-  .mat-paginator {
-    display: flex;
-    justify-content: center;
-  } 
 }
 .card {
   margin-bottom: 2em;
+}
+
+:host ::ng-deep.mat-paginator .mat-paginator-container {
+  display: flex;
+  justify-content: center;
+  padding: 0px;
 }

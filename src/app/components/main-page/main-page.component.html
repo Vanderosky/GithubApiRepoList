@@ -1,35 +1,35 @@
 <div class="set-margin">
   <div class="center-search">
     <span>
-    <form>
-      <mat-form-field class="input-full-width">
-        <mat-label class="input-align-center">User name</mat-label>
-        <input
-          class="input-align-center"
-          type="text"
-          matInput
-          [formControl]="userFormControl"
-          [errorStateMatcher]="matcher"
-          placeholder="Ex. Microsoft"
-        />
-        <mat-error
-          class="input-align-center"
-          *ngIf="userFormControl.hasError('required')"
-        >
-          User Name is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-    </form>
-  </span>
-  <span>
-    <button
-      mat-button
-      [disabled]="!userFormControl.valid"
-      (click)="searchUserRepos()"
-    >
-      <mat-icon matSuffix>search</mat-icon>
-    </button>
-  </span>
+      <form>
+        <mat-form-field class="input-full-width">
+          <mat-label class="input-align-center">User name</mat-label>
+          <input
+            class="input-align-center"
+            type="text"
+            matInput
+            [formControl]="userFormControl"
+            [errorStateMatcher]="matcher"
+            placeholder="Ex. Microsoft"
+          />
+          <mat-error
+            class="input-align-center"
+            *ngIf="userFormControl.hasError('required')"
+          >
+            User Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </span>
+    <span>
+      <button
+        mat-button
+        [disabled]="!userFormControl.valid"
+        (click)="searchUserRepos()"
+      >
+        <mat-icon matSuffix>search</mat-icon>
+      </button>
+    </span>
   </div>
 
   <div *ngIf="errorStatus == 0; else showError">
