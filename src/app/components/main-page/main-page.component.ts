@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientService } from 'src/app/services/http-client.service';
 import { RepositoriesService } from 'src/app/services/repositories.service';
@@ -32,6 +32,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
+
   fetchedRepos: Repo[] = [];
   repos: Repo[] = [];
   reposCount = 0;
@@ -109,6 +111,7 @@ export class MainPageComponent implements OnInit {
       if (params.get('user')) {
         const userName = params.get('user') || '';
         this.userFormControl.setValue(userName);
+        this.paginator.firstPage();
         this.fetchReposData(userName);
       }
     });
