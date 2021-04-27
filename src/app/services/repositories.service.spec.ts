@@ -28,12 +28,15 @@ describe('RepositoriesService', () => {
         id: 18221276,
         name: 'git-consortium',
         owner: { login: 'octocat', id: 583231, avatar_url: 'https://avatars.githubusercontent.com/u/583231?v=4' },
-        stargazers_count: 19
+        stargazers_count: 19,
+        updated_at: new Date(),
+        html_url: '',
+        open_issues_count: 0
       }];
 
     httpClientSpy.get.and.returnValue(of(expectedRepo));
 
-    repoService.fetchReposByUserName('octocat').subscribe(
+    repoService.fetchAllReposByUserName('octocat', 30, 1).subscribe(
       repoData => {
         expect(repoData.length).toEqual(expectedRepo.length, 'expected number of Repos');
         expect(repoData[0].name).toEqual(expectedRepo[0].name, 'expected Repo name');
@@ -51,7 +54,7 @@ describe('RepositoriesService', () => {
 
     httpClientSpy.get.and.returnValue(of(errorResponse));
 
-    repoService.fetchReposByUserName('').subscribe(
+    repoService.fetchAllReposByUserName('', 30, 1).subscribe(
       repos => {},
       error => expect(error.message).toContain('404')
     );
