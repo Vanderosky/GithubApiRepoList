@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RepositoriesService } from 'src/app/services/repositories.service';
 import { Repo } from 'src/app/services/types';
 
@@ -26,7 +26,7 @@ export class MainPageComponent implements OnInit {
   isFetched = false;
   userRouterName = '';
 
-  constructor(private repoService: RepositoriesService, private route: ActivatedRoute) { }
+  constructor(private repoService: RepositoriesService, private route: ActivatedRoute, private router: Router) { }
 
   userFormControl = new FormControl('', [
     Validators.required,
@@ -49,7 +49,9 @@ export class MainPageComponent implements OnInit {
           next: repoData => {
             this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
           },
-          error: error => { },
+          error: error => {
+            console.log('error');
+          },
           complete: () => {
             this.paginateRepos(0, 10);
             this.isFetched = true;
@@ -91,5 +93,10 @@ export class MainPageComponent implements OnInit {
         this.fetchReposData(userName);
       }
     });
+  }
+
+  searchUserRepos(): void {
+    const userName = this.userFormControl.value;
+    this.router.navigateByUrl('/' + userName);
   }
 }

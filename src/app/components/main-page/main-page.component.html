@@ -7,9 +7,11 @@
             <mat-error *ngIf="userFormControl.hasError('required')">
                 User Name is <strong>required</strong>
             </mat-error>
-            <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </form>
+    <button mat-button (click)="searchUserRepos()">
+        <mat-icon matSuffix>search</mat-icon>
+    </button>
 </div>
 
 <div *ngIf="isFetched" class="center">
