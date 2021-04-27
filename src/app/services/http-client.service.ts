@@ -21,9 +21,11 @@ export class HttpClientService {
 
     if (perPage) {
       perPageUrl += '?per_page=' + perPage.toString();
+    } else {
+      perPageUrl += '?per_page=' + '30';
     }
     if (page) {
-      perPageUrl += '?page=' + page.toString();
+      perPageUrl += '&page=' + page.toString();
     }
 
     return this.http
