@@ -7,9 +7,14 @@ import { RepositoriesService } from 'src/app/services/repositories.service';
 import { Repo } from 'src/app/services/types';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: FormControl | null, form: FormGroupDirective | NgForm | null
+  ): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    return !!(
+      control && control.invalid && (control.dirty || control.touched || isSubmitted
+      )
+    );
   }
 }
 
@@ -26,7 +31,11 @@ export class MainPageComponent implements OnInit {
   userRouterName = '';
   errorStatus = 0;
 
-  constructor(private repoService: RepositoriesService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private repoService: RepositoriesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   userFormControl = new FormControl('', [
     Validators.required,
@@ -47,18 +56,19 @@ export class MainPageComponent implements OnInit {
         this.errorStatus = error.status;
       },
       complete: () => {
-        this.repoService.fetchAllReposByUserName(user, 100, this.reposCount).subscribe({
-          next: repoData => {
-            this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
-          },
-          error: error => {
-            this.errorStatus = error.status;
-          },
-          complete: () => {
-            this.paginateRepos(0, 10);
-            this.errorStatus = 0;
-          }
-        });
+        this.repoService.fetchAllReposByUserName(user, 100, this.reposCount)
+          .subscribe({
+            next: repoData => {
+              this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
+            },
+            error: error => {
+              this.errorStatus = error.status;
+            },
+            complete: () => {
+              this.paginateRepos(0, 10);
+              this.errorStatus = 0;
+            }
+          });
       }
     });
   }
