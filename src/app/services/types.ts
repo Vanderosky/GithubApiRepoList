@@ -6,6 +6,7 @@ export interface Repo {
   owner: Owner;
   updated_at: Date;
   open_issues_count: number;
+  html_url: string;
 }
 
 export interface Owner {

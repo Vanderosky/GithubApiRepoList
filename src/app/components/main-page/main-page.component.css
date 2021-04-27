@@ -10,12 +10,19 @@
   .input-full-width {
     width: 100%;
   }
+  .mat-button {
+    width: 100%;
+  }
 }
 @media (min-width: 600px) {
   .center-search {
     display: flex;
     justify-content: center;
   }
+  .mat-paginator {
+    display: flex;
+    justify-content: center;
+  } 
 }
 .card {
   margin-bottom: 2em;
