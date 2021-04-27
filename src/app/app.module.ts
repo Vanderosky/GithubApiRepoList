@@ -15,6 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [AppComponent, MainPageComponent],
@@ -32,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatExpansionModule,
     MatIconModule,
     MatPaginatorModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

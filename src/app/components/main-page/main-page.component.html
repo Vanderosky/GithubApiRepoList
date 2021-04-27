@@ -1,5 +1,5 @@
 <div class="set-margin">
-  <div class="center-search">
+  <div class="center-content">
     <span>
       <form>
         <mat-form-field class="input-full-width">
@@ -43,11 +43,7 @@
       </mat-paginator>
     </div>
 
-    <div
-      *ngFor="let repo of repos"
-      fxLayout="row wrap"
-      fxLayoutGap="16px grid"
-    >
+    <div *ngFor="let repo of repos" class="center-content">
       <div>
         <mat-card class="card">
           <mat-card-header>
@@ -58,19 +54,29 @@
               Updated at {{ repo.updated_at | date }}
             </mat-card-subtitle>
           </mat-card-header>
-          <mat-card-content>
-            <div>
-              <div>
-                <div>
-                  <div>
-                    <span> Stars: {{ repo.stargazers_count }} </span>
-                    <span> Forks: {{ repo.forks }} </span>
-                    <span> Issues: {{ repo.open_issues_count }} </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
+          <mat-card-title-group>
+            <span class="fill-remaining-space">
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="primary" selected>
+                  Stars: {{ repo.stargazers_count }}
+                </mat-chip>
+              </mat-chip-list>
+            </span>
+            <span class="fill-remaining-space">
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="accent" selected>
+                  Forks: {{ repo.forks }}
+                </mat-chip>
+              </mat-chip-list>
+            </span>
+            <span>
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="warn" selected>
+                  Issues: {{ repo.open_issues_count }}
+                </mat-chip>
+              </mat-chip-list>
+            </span>
+          </mat-card-title-group>
         </mat-card>
       </div>
     </div>

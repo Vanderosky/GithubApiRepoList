@@ -13,19 +13,27 @@
   .mat-button {
     width: 100%;
   }
+  .card {
+    margin-bottom: 2em;
+  }
 }
 @media (min-width: 600px) {
-  .center-search {
+  .center-content {
     display: flex;
     justify-content: center;
   }
-}
-.card {
-  margin-bottom: 2em;
+  .card {
+    margin-bottom: 2em;
+    width: 40em;
+  }
 }
 
 :host ::ng-deep.mat-paginator .mat-paginator-container {
   display: flex;
   justify-content: center;
   padding: 0px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
 }
