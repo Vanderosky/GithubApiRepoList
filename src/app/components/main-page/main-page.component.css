@@ -1,3 +1,11 @@
+.set-margin {
+  margin-top: 1em;
+}
+
+.input-align-center {
+  text-align: center;
+}
+
 @media (max-width: 599px) {
     .input-full-width {
         width: 100%;
