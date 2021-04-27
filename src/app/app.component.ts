@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RepositoriesService } from './services/repositories.service';
 import { Repo, User } from './services/types';
 
@@ -10,9 +11,13 @@ import { Repo, User } from './services/types';
 export class AppComponent implements OnInit {
   title = 'GithubApiRepoList';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  goToMainPage(): void {
+    this.router.navigateByUrl('');
   }
 
 }
