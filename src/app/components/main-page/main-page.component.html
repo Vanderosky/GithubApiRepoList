@@ -1,5 +1,5 @@
 <div class="set-margin">
-  <div class="center">
+  <div class="center-search">
     <form>
       <mat-form-field class="input-full-width">
         <mat-label class="input-align-center">User name</mat-label>
@@ -39,23 +39,34 @@
       </mat-paginator>
     </div>
 
-    <div class="center" *ngFor="let repo of repos">
+    <div
+      class="center"
+      *ngFor="let repo of repos"
+      fxLayout="row wrap"
+      fxLayoutGap="16px grid"
+    >
       <div class="center">
         <mat-card class="card">
           <mat-card-header>
-            <mat-card-title>{{ repo.name }}</mat-card-title>
+            <mat-card-title
+              ><a>{{ repo.name }}</a></mat-card-title
+            >
             <mat-card-subtitle>
-              {{ repo.stargazers_count }}
-              <mat-icon>star</mat-icon>
+              Updated at {{ repo.updated_at | date }}
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Exercitationem, praesentium sit tempora numquam vel odit dolorem
-              qui quod sint distinctio! Quasi exercitationem tempore voluptas
-              quam voluptatibus distinctio ex magni repellendus?
-            </p>
+            <div class="center">
+              <div class="card card-body mb-2">
+                <div>
+                  <div>
+                    <span> Stars: {{ repo.stargazers_count }} </span>
+                    <span> Forks: {{ repo.forks }} </span>
+                    <span> Issues: {{ repo.open_issues_count }} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>

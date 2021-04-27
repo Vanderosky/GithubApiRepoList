@@ -4,6 +4,8 @@ export interface Repo {
   stargazers_count: number;
   forks: number;
   owner: Owner;
+  updated_at: Date;
+  open_issues_count: number;
 }
 
 export interface Owner {
