@@ -8,6 +8,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClientService } from 'src/app/services/http-client.service';
 import { RepositoriesService } from 'src/app/services/repositories.service';
 import { Repo } from 'src/app/services/types';
 
@@ -40,7 +41,8 @@ export class MainPageComponent implements OnInit {
   constructor(
     private repoService: RepositoriesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private httpClientService: HttpClientService
   ) {}
 
   userFormControl = new FormControl('', [Validators.required]);
@@ -52,7 +54,7 @@ export class MainPageComponent implements OnInit {
   }
 
   fetchReposData(user: string): void {
-    this.repoService.fetchUser(user).subscribe({
+    this.httpClientService.fetchUser(user).subscribe({
       next: (userInfo) => {
         this.reposCount = userInfo.public_repos;
       },
