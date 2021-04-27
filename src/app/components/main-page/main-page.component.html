@@ -35,7 +35,7 @@
   <div *ngIf="errorStatus == 0; else showError">
     <div>
       <mat-paginator
-        [length]="reposCount"
+        [length]="user.public_repos"
         [pageSize]="10"
         [pageSizeOptions]="[5, 10, 25, 100]"
         (page)="onChangePage($event)"
@@ -47,9 +47,7 @@
       <div>
         <mat-card class="card">
           <mat-card-header>
-            <mat-card-title
-              ><a>{{ repo.name }}</a></mat-card-title
-            >
+            <mat-card-title (click)="goToGithubProfile(repo.name)"><a>{{ repo.name }}</a></mat-card-title>
             <mat-card-subtitle>
               Updated at {{ repo.updated_at | date }}
             </mat-card-subtitle>

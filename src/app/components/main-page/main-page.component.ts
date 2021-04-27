@@ -14,7 +14,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientService } from 'src/app/services/http-client.service';
 import { RepositoriesService } from 'src/app/services/repositories.service';
-import { Repo } from 'src/app/services/types';
+import { Repo, User } from 'src/app/services/types';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -43,9 +43,9 @@ export class MainPageComponent implements OnInit {
 
   fetchedRepos: Repo[] = [];
   repos: Repo[] = [];
-  reposCount = 0;
   userRouterName = '';
   errorStatus = 0;
+  user: User = { login: '', public_repos: 0}
 
   constructor(
     private repoService: RepositoriesService,
@@ -65,14 +65,15 @@ export class MainPageComponent implements OnInit {
   fetchReposData(user: string): void {
     this.httpClientService.fetchUser(user).subscribe({
       next: (userInfo) => {
-        this.reposCount = userInfo.public_repos;
+        this.user.public_repos = userInfo.public_repos;
+        this.user.login = userInfo.login;
       },
       error: (error) => {
         this.errorStatus = error.status;
       },
       complete: () => {
         this.repoService
-          .fetchAllReposByUserName(user, 100, this.reposCount)
+          .fetchAllReposByUserName(user, 100, this.user.public_repos)
           .subscribe({
             next: (repoData) => {
               this.fetchedRepos = this.sortReposByStars([].concat(...repoData));
@@ -127,5 +128,9 @@ export class MainPageComponent implements OnInit {
   searchUserRepos(): void {
     const userName = this.userFormControl.value;
     this.router.navigateByUrl('/' + userName);
+  }
+
+  goToGithubProfile(repoName: string): void {
+    window.location.href = 'https://github.com/' + this.user.login + '/' + repoName;
   }
 }

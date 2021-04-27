@@ -37,3 +37,7 @@
 .fill-remaining-space {
   flex: 1 1 auto;
 }
+
+.mat-card-title {
+  cursor: pointer
+}
