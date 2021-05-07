@@ -45,7 +45,7 @@ export class MainPageComponent implements OnInit {
   repos: Repo[] = [];
   userRouterName = '';
   errorStatus = 0;
-  user: User = { login: '', public_repos: 0}
+  user: User = { login: '', public_repos: 0 };
 
   constructor(
     private repoService: RepositoriesService,
@@ -131,6 +131,7 @@ export class MainPageComponent implements OnInit {
   }
 
   goToGithubProfile(repoName: string): void {
-    window.location.href = 'https://github.com/' + this.user.login + '/' + repoName;
+    window.location.href =
+      'https://github.com/' + this.user.login + '/' + repoName;
   }
 }
